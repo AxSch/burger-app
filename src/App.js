@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styles from './App.module.scss';
 import Layout from './components/Layout/Layout.tsx'
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder.tsx'
 
