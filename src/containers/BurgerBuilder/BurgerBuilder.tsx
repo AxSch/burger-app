@@ -1,6 +1,7 @@
 import React from 'react'
 import Burger from '../../components/Burger/Burger'
 import styled from 'styled-components'
+import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 
 export interface IBurgerIngredients {
   salad: number,
@@ -24,7 +25,7 @@ const burgerBuilder: React.FunctionComponent<{}>= () => {
   return (
     <>
       <Burger ingredients={ingrednts} />
-      <div>Burger controls</div>
+      <BuildControls />
     </>
   )
 }
