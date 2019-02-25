@@ -32,7 +32,8 @@ export interface IIPriceState {
 interface IBurgerBuilderState {
   ingredients: IBurgerIngredients,
   prices: IBurgerIngredients
-  totalPrice: number
+  totalPrice: number,
+  isPurchasable: boolean
 }
 
 export interface IAddRemHandlers {
@@ -46,8 +47,28 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     this.state = {
       ingredients: ingredientsObj,
       prices: pricesObj,
-      totalPrice: 0.20
+      totalPrice: 0.20,
+      isPurchasable: false
     }
+  }
+
+  private updatePurchase  = () => {
+    const { ingredients } = this.state
+    const ingrdnts = {
+      ...ingredients
+    }
+
+    const sum = Object.keys(ingrdnts).map(ingrnt => {
+      return ingrdnts[ingrnt]
+    }).reduce((prevVal, currVal) => {
+      return sum + currVal
+    }, 0)
+
+    this.setState(() => {
+      return {
+        isPurchasable: sum > 0
+      }
+    })
   }
 
   private addIngrdHandler = type => {
@@ -71,7 +92,6 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       ...ingredients,
     }
     this.setState((prevState) => {
-      // if (prevState.ingredients[type] === 0) return;
       newState[type] = prevState.ingredients[type] - 1
       const newPrice = prevState.totalPrice - prices[type]
       return {
