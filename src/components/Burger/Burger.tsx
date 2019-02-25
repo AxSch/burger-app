@@ -34,7 +34,6 @@ interface IFunctionComponentProps {
 
 
 const burger: React.FunctionComponent<IFunctionComponentProps> = ({ ingredients }) => {
-  console.log(ingredients)
   const renderIngrds = ingredients => {
     const ingreds = Object.keys(ingredients).map(ingrd => {
       return [...Array(ingredients[ingrd])].map((_, idx) => {
@@ -43,7 +42,6 @@ const burger: React.FunctionComponent<IFunctionComponentProps> = ({ ingredients 
     }).reduce((prevVal, currVal) => {
       return prevVal.concat(currVal)
     })
-    console.log(ingreds)
     if (ingreds.length === 0) {
       return <p>Please add some ingredients</p>
     }
