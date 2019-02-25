@@ -61,7 +61,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     const sum = Object.keys(ingrdnts).map(ingrnt => {
       return ingrdnts[ingrnt]
     }).reduce((prevVal, currVal) => {
-      return sum + currVal
+      return prevVal + currVal
     }, 0)
 
     this.setState(() => {
