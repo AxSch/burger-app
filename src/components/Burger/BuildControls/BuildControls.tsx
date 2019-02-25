@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import BuildControl from './BuildControl/BuildControl'
-import { IAddRemHandlers } from '../../../containers/BurgerBuilder/BurgerBuilder';
+import { IAddRemHandlers, IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder';
 
 const StyledControls = styled.div`
   width: 100%;
@@ -16,24 +16,35 @@ const StyledControls = styled.div`
 
 interface IControl {
   label: string
-  type:string
+  type: string
 }
 
 interface IBuildControlsProps {
   setIngredients: IAddRemHandlers
+  isDisabled: IBurgerIngredients
 }
 
-const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients }) => {
+const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled }) => {
 
   const controls: IControl[] = [
-    { label: 'Salad', type: 'salad'},
-    { label: 'Bacon', type: 'bacon'},
-    { label: 'Cheese', type: 'cheese'},
-    { label: 'Meat', type: 'meat'}
+    { label: 'Salad', type: 'salad' },
+    { label: 'Bacon', type: 'bacon' },
+    { label: 'Cheese', type: 'cheese' },
+    { label: 'Meat', type: 'meat' }
   ]
 
   const renderControl = (controls: IControl[]) => {
-    return controls.map(ctrl => <BuildControl key={ctrl.label} ingredientLabel={ctrl.label} type={ctrl.type} addRemHandlers={setIngredients} />)
+    return controls.map(ctrl => {
+      return (
+        <BuildControl
+          key={ctrl.label}
+          ingredientLabel={ctrl.label}
+          type={ctrl.type}
+          addRemHandlers={setIngredients}
+          isDisabled={isDisabled}
+        />
+      )
+    })
   }
   return (
     <StyledControls>
