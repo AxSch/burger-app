@@ -90,7 +90,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     return (
       <>
         <Burger ingredients={ingredients} />
-        <BuildControls setIngredients={addRemHandlers} setPrice={() => { }} />
+        <BuildControls setIngredients={addRemHandlers} />
       </>
     )
   }
