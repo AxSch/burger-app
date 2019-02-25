@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { IAddRemHandlers } from '../../../../containers/BurgerBuilder/BurgerBuilder';
 
 const StyledControl = styled.div`
   display: flex;
@@ -23,14 +24,16 @@ const StyledControl = styled.div`
 
 interface IbuildControlProps {
   ingredientLabel: string
+  type: string
+  addRemHandlers: IAddRemHandlers
 }
 
-const buildControl: React.FunctionComponent<IbuildControlProps> = ({ingredientLabel}) => {
+const buildControl: React.FunctionComponent<IbuildControlProps> = ({ingredientLabel, addRemHandlers, type}) => {
   return (
     <StyledControl>
       <div>{ingredientLabel}</div>
-      <button>Add</button>
-      <button>Remove</button>
+      <button onClick={() => addRemHandlers.addHandler(type)}>Add</button>
+      <button onClick={() => addRemHandlers.subHandler(type)}>Remove</button>
     </StyledControl>
   )
 }
