@@ -22,9 +22,10 @@ interface IControl {
 interface IBuildControlsProps {
   setIngredients: IAddRemHandlers
   isDisabled: IBurgerIngredients
+  totalPrice: number
 }
 
-const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled }) => {
+const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled, totalPrice }) => {
 
   const controls: IControl[] = [
     { label: 'Salad', type: 'salad' },
@@ -48,6 +49,9 @@ const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngred
   }
   return (
     <StyledControls>
+      <div>
+        <p>Total Price: £{totalPrice.toFixed(2)}</p>
+      </div>
       {renderControl(controls)}
     </StyledControls>
   )
