@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import BuildControl from './BuildControl/BuildControl'
+import { IAddRemHandlers } from '../../../containers/BurgerBuilder/BurgerBuilder';
 
 const StyledControls = styled.div`
   width: 100%;
@@ -18,7 +19,11 @@ interface IControl {
   type:string
 }
 
-const buildControls: React.FunctionComponent = () => {
+interface IBuildControlsProps {
+  setIngredients: IAddRemHandlers
+}
+
+const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients }) => {
 
   const controls: IControl[] = [
     { label: 'Salad', type: 'salad'},
@@ -28,7 +33,7 @@ const buildControls: React.FunctionComponent = () => {
   ]
 
   const renderControl = (controls: IControl[]) => {
-    return controls.map(ctrl => <BuildControl key={ctrl.label} ingredientLabel={ctrl.label} />)
+    return controls.map(ctrl => <BuildControl key={ctrl.label} ingredientLabel={ctrl.label} type={ctrl.type} addRemHandlers={setIngredients} />)
   }
   return (
     <StyledControls>
