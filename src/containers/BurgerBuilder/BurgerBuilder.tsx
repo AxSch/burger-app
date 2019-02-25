@@ -97,12 +97,16 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       addHandler: this.addIngrdHandler,
       subHandler: this.subIngrdHandler
     }
-    const { ingredients } = this.state
+    const { ingredients, totalPrice } = this.state
     const disabled = this.checkIfZero(ingredients)
     return (
       <>
         <Burger ingredients={ingredients} />
-        <BuildControls setIngredients={addRemHandlers} isDisabled={disabled}/>
+        <BuildControls 
+          setIngredients={addRemHandlers} 
+          isDisabled={disabled}
+          totalPrice={totalPrice}
+        />
       </>
     )
   }
