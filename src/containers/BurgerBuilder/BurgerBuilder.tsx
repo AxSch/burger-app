@@ -1,6 +1,5 @@
 import React from 'react'
 import Burger from '../../components/Burger/Burger'
-import styled from 'styled-components'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 
 export interface IBurgerIngredients {
@@ -52,18 +51,12 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     }
   }
 
-  private updatePurchase  = () => {
-    const { ingredients } = this.state
-    const ingrdnts = {
-      ...ingredients
-    }
-
-    const sum = Object.keys(ingrdnts).map(ingrnt => {
-      return ingrdnts[ingrnt]
+  private updatePurchase  = ingredients => {
+    const sum = Object.keys(ingredients).map(ingrnt => {
+      return ingredients[ingrnt]
     }).reduce((prevVal, currVal) => {
       return prevVal + currVal
     }, 0)
-
     this.setState(() => {
       return {
         isPurchasable: sum > 0
@@ -76,14 +69,15 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     const newState = {
       ...ingredients,
     }
+    newState[type] = ingredients[type] + 1
     this.setState((prevState) => {
-      newState[type] = prevState.ingredients[type] + 1
       const newPrice = prevState.totalPrice + prices[type]
       return {
         ingredients: newState,
         totalPrice: newPrice
       }
     })
+    this.updatePurchase(newState)
   }
 
   private subIngrdHandler = type => {
@@ -91,14 +85,15 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     const newState = {
       ...ingredients,
     }
+    newState[type] = ingredients[type] - 1
     this.setState((prevState) => {
-      newState[type] = prevState.ingredients[type] - 1
       const newPrice = prevState.totalPrice - prices[type]
       return {
         ingredients: newState,
         totalPrice: newPrice
       }
     })
+    this.updatePurchase(newState)
   }
 
   private checkIfZero = (ingredients: IBurgerIngredients) => {
@@ -119,6 +114,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     }
     const { ingredients, totalPrice, isPurchasable } = this.state
     const disabled = this.checkIfZero(ingredients)
+    console.log(isPurchasable)
     return (
       <>
         <Burger ingredients={ingredients} />
