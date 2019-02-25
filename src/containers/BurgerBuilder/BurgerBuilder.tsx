@@ -10,14 +10,14 @@ export interface IBurgerIngredients {
   meat: number,
 }
 
-const ingredients: IBurgerIngredients = {
+const ingredientsObj: IBurgerIngredients = {
   salad: 0,
   bacon: 0,
   cheese: 0,
   meat: 0,
 }
 
-const prices: IBurgerIngredients = {
+const pricesObj: IBurgerIngredients = {
   salad: 0.2,
   bacon: 0.5,
   cheese: 0.3,
@@ -29,24 +29,71 @@ export interface IIPriceState {
   setPrices: Function
 }
 
-class BurgerBuilder extends React.Component<{}> {
-  constructor(props){
+interface IBurgerBuilderState {
+  ingredients: IBurgerIngredients,
+  prices: IBurgerIngredients
+  totalPrice: number
+}
+
+export interface IAddRemHandlers {
+  subHandler: Function
+  addHandler: Function
+}
+
+class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
+  constructor(props) {
     super(props)
     this.state = {
-      ingredients,
-      prices
+      ingredients: ingredientsObj,
+      prices: pricesObj,
+      totalPrice: 0.20
     }
+  }
+
+  private addIngrdHandler = type => {
+    const { ingredients, prices } = this.state
+    const newState = {
+      ...ingredients,
+    }
+    this.setState((prevState) => {
+      newState[type] = prevState.ingredients[type] + 1
+      const newPrice = prevState.totalPrice + prices[type]
+      return {
+        ingredients: newState,
+        totalPrice: newPrice
+      }
+    })
+  }
+
+  private subIngrdHandler = type => {
+    const { ingredients, prices } = this.state
+    const newState = {
+      ...ingredients,
+    }
+    this.setState((prevState) => {
+      newState[type] = prevState.ingredients[type] - 1
+      const newPrice = prevState.totalPrice - prices[type]
+      return {
+        ingredients: newState,
+        totalPrice: newPrice
+      }
+    })
   }
 
 
   public render() {
-   return (
-    <>
-      <Burger ingredients={ingredients} />
-      <BuildControls setIngredient={() => {}} setPrice={undefined} />
-    </>
-  )
-}
+    const addRemHandlers: IAddRemHandlers = {
+      addHandler: this.addIngrdHandler,
+      subHandler: this.subIngrdHandler
+    }
+    const { ingredients } = this.state
+    return (
+      <>
+        <Burger ingredients={ingredients} />
+        <BuildControls setIngredients={addRemHandlers} setPrice={() => { }} />
+      </>
+    )
+  }
 }
 
 export default BurgerBuilder
