@@ -9,25 +9,44 @@ export interface IBurgerIngredients {
   cheese: number,
   meat: number,
 }
-interface IBurgerBuilderState {
-  ingredients: IBurgerIngredients
+
+const ingredients: IBurgerIngredients = {
+  salad: 0,
+  bacon: 0,
+  cheese: 0,
+  meat: 0,
 }
 
-const initialState = {
-    salad: 2,
-    bacon: 2,
-    cheese: 2,
-    meat: 1,
+const prices: IBurgerIngredients = {
+  salad: 0.2,
+  bacon: 0.5,
+  cheese: 0.3,
+  meat: 1.20,
 }
 
-const burgerBuilder: React.FunctionComponent<{}>= () => {
-  const [ingrednts, setIngredients] = React.useState(initialState)
-  return (
+export interface IIPriceState {
+  price: IBurgerIngredients
+  setPrices: Function
+}
+
+class BurgerBuilder extends React.Component<{}> {
+  constructor(props){
+    super(props)
+    this.state = {
+      ingredients,
+      prices
+    }
+  }
+
+
+  public render() {
+   return (
     <>
-      <Burger ingredients={ingrednts} />
-      <BuildControls />
+      <Burger ingredients={ingredients} />
+      <BuildControls setIngredient={() => {}} setPrice={undefined} />
     </>
   )
 }
+}
 
-export default burgerBuilder
+export default BurgerBuilder
