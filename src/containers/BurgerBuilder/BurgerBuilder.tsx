@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 
 export interface IBurgerIngredients {
-  salad: number,
-  bacon: number,
-  cheese: number,
-  meat: number,
+  salad: number | boolean,
+  bacon: number | boolean,
+  cheese: number | boolean,
+  meat: number | boolean,
 }
 
 const ingredientsObj: IBurgerIngredients = {
@@ -71,6 +71,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       ...ingredients,
     }
     this.setState((prevState) => {
+      // if (prevState.ingredients[type] === 0) return;
       newState[type] = prevState.ingredients[type] - 1
       const newPrice = prevState.totalPrice - prices[type]
       return {
@@ -80,6 +81,16 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     })
   }
 
+  private checkIfZero = (ingredients: IBurgerIngredients) => {
+    const newObj = {
+      ...ingredients
+    }
+    for (const ingrd in newObj) {
+      newObj[ingrd] = newObj[ingrd] <= 0 
+    }
+    return newObj
+  }
+
 
   public render() {
     const addRemHandlers: IAddRemHandlers = {
@@ -87,10 +98,11 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       subHandler: this.subIngrdHandler
     }
     const { ingredients } = this.state
+    const disabled = this.checkIfZero(ingredients)
     return (
       <>
         <Burger ingredients={ingredients} />
-        <BuildControls setIngredients={addRemHandlers} />
+        <BuildControls setIngredients={addRemHandlers} isDisabled={disabled}/>
       </>
     )
   }
