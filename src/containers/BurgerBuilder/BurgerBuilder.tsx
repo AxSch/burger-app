@@ -29,10 +29,11 @@ export interface IIPriceState {
 }
 
 interface IBurgerBuilderState {
-  ingredients: IBurgerIngredients,
+  ingredients: IBurgerIngredients
   prices: IBurgerIngredients
-  totalPrice: number,
+  totalPrice: number
   isPurchasable: boolean
+  isVisible: boolean
 }
 
 export interface IAddRemHandlers {
@@ -47,7 +48,8 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       ingredients: ingredientsObj,
       prices: pricesObj,
       totalPrice: 0.20,
-      isPurchasable: false
+      isPurchasable: false,
+      isVisible: false
     }
   }
 
@@ -106,15 +108,22 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     return newObj
   }
 
+  private showSummary = () => {
+    this.setState(prevState => {
+      return {
+        isVisible: !prevState.isVisible
+      }
+    })
+  }
+
 
   public render() {
     const addRemHandlers: IAddRemHandlers = {
       addHandler: this.addIngrdHandler,
       subHandler: this.subIngrdHandler
     }
-    const { ingredients, totalPrice, isPurchasable } = this.state
+    const { ingredients, totalPrice, isPurchasable, isVisible } = this.state
     const disabled = this.checkIfZero(ingredients)
-    console.log(isPurchasable)
     return (
       <>
         <Burger ingredients={ingredients} />
@@ -123,6 +132,8 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
           isDisabled={disabled}
           totalPrice={totalPrice}
           isPurchasable={isPurchasable}
+          isVisible={isVisible}
+          showModal={this.showSummary}
         />
       </>
     )
