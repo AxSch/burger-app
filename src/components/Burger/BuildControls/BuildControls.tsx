@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import BuildControl from './BuildControl/BuildControl'
 import { IAddRemHandlers, IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder';
+import Modal from '../../UI/Modal/Modal';
 
 const StyledControls = styled.div`
   width: 100%;
@@ -63,9 +64,11 @@ interface IBuildControlsProps {
   isDisabled: IBurgerIngredients
   totalPrice: number
   isPurchasable: boolean
+  isVisible: boolean
+  showModal: Function
 }
 
-const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled, totalPrice, isPurchasable }) => {
+const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled, totalPrice, isPurchasable, showModal, isVisible }) => {
 
   const controls: IControl[] = [
     { label: 'Salad', type: 'salad' },
@@ -87,13 +90,26 @@ const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngred
       )
     })
   }
+
+  const renderModal = isVisible => {
+    if (isVisible) {
+      return (
+        <Modal>
+          <h1>Buy something...I guess</h1>
+        </Modal>
+      )
+    }
+    return null
+  }
+
   return (
     <StyledControls>
       <div>
         <p>Total Price: £{totalPrice.toFixed(2)}</p>
       </div>
       {renderControl(controls)}
-      <StyledButton disabled={!isPurchasable} >ORDER NOW</StyledButton>
+      {renderModal(isVisible)}
+      <StyledButton disabled={!isPurchasable} onClick={() => showModal()}>ORDER NOW</StyledButton>
     </StyledControls>
   )
 }
