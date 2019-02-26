@@ -53,7 +53,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     }
   }
 
-  private updatePurchase  = ingredients => {
+  private updatePurchase  = (ingredients:IBurgerIngredients) => {
     const sum = Object.keys(ingredients).map(ingrnt => {
       return ingredients[ingrnt]
     }).reduce((prevVal, currVal) => {
@@ -66,7 +66,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     })
   }
 
-  private addIngrdHandler = type => {
+  private addIngrdHandler = (type: string) => {
     const { ingredients, prices } = this.state
     const newState = {
       ...ingredients,
@@ -82,7 +82,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     this.updatePurchase(newState)
   }
 
-  private subIngrdHandler = type => {
+  private subIngrdHandler = (type: string) => {
     const { ingredients, prices } = this.state
     const newState = {
       ...ingredients,
