@@ -130,7 +130,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     return (
       <>
         <Modal isVisible={isVisible}>
-          <Backdrop isVisible={isVisible} />
+          <Backdrop isVisible={isVisible} clicked={this.showSummary} />
           <OrderSummary ingredients={ingredients} />
         </Modal>
         <Burger ingredients={ingredients} />
