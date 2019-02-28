@@ -5,12 +5,13 @@ interface IOrderSummary {
   ingredients: IBurgerIngredients
 }
 
-const orderSummary = (ingredients: IOrderSummary) => {
+const orderSummary = ({ ingredients }) => {
   const ingredientsSummary = ingredients => {
     return Object.keys(ingredients).map(ingrnt => {
-      return <li><span style={{ textTransform: 'capitalize' }}>{ingrnt}</span>: {ingredients[ingrnt]}</li>
+      return <li key={ingrnt}><span style={{ textTransform: 'capitalize' }}>{ingrnt}</span>: {ingredients[ingrnt]}</li>
     })
   }
+
   return (
     <>
       <h3>Your Order</h3>
