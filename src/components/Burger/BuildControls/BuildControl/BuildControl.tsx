@@ -4,11 +4,9 @@ import { IAddRemHandlers, IBurgerIngredients } from '../../../../containers/Burg
 
 const StyledControl = styled.div`
   display: flex;
-  justify-control: space-between;
+  justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 1px #ccc;
   margin: 5px 0;
-  padding: 10px 0;
 
   .Less {  
     background-color: #D39952;
@@ -44,7 +42,7 @@ const StyledButton = styled.button`
   font: inherit;
   padding: 5px;
   margin: 0 5px;
-  width: 80px;
+  width: 100%;
   border: 1px solid #AA6817;
   cursor: pointer;
   outline: none;
