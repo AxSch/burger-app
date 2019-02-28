@@ -1,6 +1,8 @@
 import React from 'react'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 export interface IBurgerIngredients {
   salad: number | boolean,
@@ -126,6 +128,9 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     const disabled = this.checkIfZero(ingredients)
     return (
       <>
+        <Modal isVisible={isVisible}>
+          <OrderSummary ingredients={ingredients} />
+        </Modal>
         <Burger ingredients={ingredients} />
         <BuildControls 
           setIngredients={addRemHandlers} 
