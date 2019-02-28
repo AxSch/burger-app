@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+
 interface IModal {
   isVisible: boolean
 }
@@ -10,7 +11,7 @@ class Modal extends React.Component<IModal> {
     super(props)
     this.modal = document.createElement('div')
   }
-  private modal
+  private modal: Element
 
   public componentDidMount() {
     document.body.appendChild(this.modal)
