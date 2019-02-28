@@ -1,9 +1,29 @@
 import React from 'react'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
-import Modal from '../../components/UI/Modal/Modal';
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
+import Modal from '../../components/UI/Modal/Modal'
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import Backdrop from '../../components/UI/Backdrop/Backdrop'
+import styled from 'styled-components'
+
+const StyledSummary  = styled.div`
+  position: fixed;
+  z-index: 500;
+  background-color: white;
+  width: 70%;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  padding: 16px;
+  left: 15%;
+  top: 30%; 
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+
+  @media (min-width: 600px) {
+    width: 500px;
+    left: calc(50% - 250px);
+  }
+`
 
 export interface IBurgerIngredients {
   salad: number | boolean,
@@ -131,7 +151,9 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       <>
         <Modal isVisible={isVisible}>
           <Backdrop isVisible={isVisible} clicked={this.showSummary} />
-          <OrderSummary ingredients={ingredients} />
+          <StyledSummary>
+            <OrderSummary ingredients={ingredients} />
+          </StyledSummary>
         </Modal>
         <Burger ingredients={ingredients} />
         <BuildControls 
