@@ -10,7 +10,7 @@ const StyledControl = styled.div`
   margin: 5px 0;
   padding: 10px 0;
 
-  .button {
+  button {
     display: block;
     font: inherit;
     padding: 5px;
@@ -19,6 +19,19 @@ const StyledControl = styled.div`
     border: 1px solid #AA6817;
     cursor: pointer;
     outline: none;
+  }
+
+  button:disabled {
+    background-color: #AC9980;
+    border: 1px solid #7E7365;
+    color: #ccc;
+    cursor: default;
+  }
+
+  button:hover:disabled {
+    background-color: #AC9980;
+    color: #ccc;
+    cursor: not-allowed;
   }
 `
 
