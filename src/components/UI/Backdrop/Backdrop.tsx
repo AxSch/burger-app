@@ -5,7 +5,7 @@ interface IBackdrop {
 }
 
 
-const backdrop = (isVisible: IBackdrop) => {
+const Backdrop: React.FunctionComponent<IBackdrop> = ({isVisible}) => {
   const renderBackdrop = isVisible => {
     if (isVisible) {
       return <div></div>
@@ -19,4 +19,4 @@ const backdrop = (isVisible: IBackdrop) => {
   )
 }
 
-export default backdrop
+export default Backdrop
