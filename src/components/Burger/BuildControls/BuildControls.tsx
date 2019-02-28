@@ -7,14 +7,14 @@ const StyledControls = styled.div`
   width: 100%;
   background-color: #CF8F2E;
   display: flex;
-  flex-flow: coloumn;
-  align-items: center;
+  flex-flow: column;
   box-shadow: 0 2px 1px #ccc;
   margin: auto;
   padding: 10px 0;
 `
 
 const StyledButton = styled.button`
+  width: 30%
   background-color: #DAD735;
   outline: none;
   cursor: pointer;
@@ -67,7 +67,7 @@ interface IBuildControlsProps {
   showModal: Function
 }
 
-const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled, totalPrice, isPurchasable, showModal, isVisible }) => {
+const BuildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled, totalPrice, isPurchasable, showModal, isVisible }) => {
 
   const controls: IControl[] = [
     { label: 'Salad', type: 'salad' },
@@ -96,9 +96,11 @@ const buildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngred
         <p>Total Price: £{totalPrice.toFixed(2)}</p>
       </div>
       {renderControl(controls)}
-      <StyledButton disabled={!isPurchasable} onClick={() => showModal()}>ORDER NOW</StyledButton>
+      <div>
+        <StyledButton disabled={!isPurchasable} onClick={() => showModal()}>ORDER NOW</StyledButton>
+      </div>
     </StyledControls>
   )
 }
 
-export default buildControls
+export default BuildControls
