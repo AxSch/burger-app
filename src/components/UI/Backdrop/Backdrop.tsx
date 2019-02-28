@@ -2,13 +2,14 @@ import React from 'react'
 
 interface IBackdrop {
   isVisible: boolean
+  clicked: Function
 }
 
 
-const Backdrop: React.FunctionComponent<IBackdrop> = ({isVisible}) => {
+const Backdrop: React.FunctionComponent<IBackdrop> = ({isVisible, clicked}) => {
   const renderBackdrop = isVisible => {
     if (isVisible) {
-      return <div></div>
+      return <div onClick={() => clicked()}>BACKDROP MINUS STYLING</div>
     }
     return null
   }
