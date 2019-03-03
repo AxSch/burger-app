@@ -5,6 +5,7 @@ import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Backdrop from '../../components/UI/Backdrop/Backdrop'
 import styled from 'styled-components'
+import { ingredientsObj, pricesObj } from '../../utils/constants'
 
 const StyledSummary = styled.div`
   position: fixed;
@@ -30,20 +31,6 @@ export interface IBurgerIngredients {
   bacon: number | boolean,
   cheese: number | boolean,
   meat: number | boolean,
-}
-
-const ingredientsObj: IBurgerIngredients = {
-  salad: 0,
-  bacon: 0,
-  cheese: 0,
-  meat: 0,
-}
-
-const pricesObj: IBurgerIngredients = {
-  salad: 0.2,
-  bacon: 0.5,
-  cheese: 0.3,
-  meat: 1.20,
 }
 
 export interface IIPriceState {
@@ -181,28 +168,29 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       isVisible: isVisible,
       showModal: this.showSummary
     }
+
     return (
       <>
-      <Context.Provider value={context}>
-        <Modal isVisible={isVisible}>
-          <Backdrop isVisible={isVisible} clicked={this.showSummary} />
-          <StyledSummary>
-            <OrderSummary
-              ingredients={ingredients}
-            />
-          </StyledSummary>
-        </Modal>
-        <Burger ingredients={ingredients} />
-        <BuildControls
-          context={this.context.ingredients}
-          setIngredients={addRemHandlers}
-          isDisabled={disabled}
-          totalPrice={totalPrice}
-          isPurchasable={isPurchasable}
-          isVisible={isVisible}
-          showModal={this.showSummary}
-        />
-      </Context.Provider>
+        <Context.Provider value={context}>
+          <Modal isVisible={isVisible}>
+            <Backdrop isVisible={isVisible} clicked={this.showSummary} />
+            <StyledSummary>
+              <OrderSummary
+                ingredients={ingredients}
+              />
+            </StyledSummary>
+          </Modal>
+          <Burger ingredients={ingredients} />
+          <BuildControls
+            context={this.context.ingredients}
+            setIngredients={addRemHandlers}
+            isDisabled={disabled}
+            totalPrice={totalPrice}
+            isPurchasable={isPurchasable}
+            isVisible={isVisible}
+            showModal={this.showSummary}
+          />
+        </Context.Provider>
       </>
     )
   }
