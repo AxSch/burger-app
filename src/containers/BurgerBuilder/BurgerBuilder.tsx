@@ -6,7 +6,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Backdrop from '../../components/UI/Backdrop/Backdrop'
 import styled from 'styled-components'
 
-const StyledSummary  = styled.div`
+const StyledSummary = styled.div`
   position: fixed;
   z-index: 500;
   background-color: white;
@@ -63,6 +63,28 @@ export interface IAddRemHandlers {
   subHandler: Function
   addHandler: Function
 }
+export interface IContext {
+  ingredients: IBurgerIngredients
+  setIngredients: IAddRemHandlers
+  isDisabled: IBurgerIngredients
+  totalPrice: number
+  isPurchasable: boolean
+  isVisible: boolean
+  showModal: Function
+}
+
+const Context = React.createContext<IContext>({
+  ingredients: ingredientsObj,
+  setIngredients: {
+    subHandler: Function,
+    addHandler: Function,
+  },
+  isDisabled: ingredientsObj,
+  totalPrice: 0,
+  isPurchasable: false,
+  isVisible: false,
+  showModal: () => { }
+})
 
 class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   constructor(props) {
@@ -76,7 +98,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     }
   }
 
-  private updatePurchase  = (ingredients:IBurgerIngredients) => {
+  private updatePurchase = (ingredients: IBurgerIngredients) => {
     const sum = Object.keys(ingredients).map(ingrnt => {
       return ingredients[ingrnt]
     }).reduce((prevVal, currVal) => {
@@ -126,7 +148,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       ...ingredients
     }
     for (const ingrd in newObj) {
-      newObj[ingrd] = newObj[ingrd] <= 0 
+      newObj[ingrd] = newObj[ingrd] <= 0
     }
     return newObj
   }
@@ -139,6 +161,9 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     })
   }
 
+  private purchaseCheckout = () => {
+    alert('One krabby patty coming up!')
+  }
 
   public render() {
     const addRemHandlers: IAddRemHandlers = {
@@ -147,23 +172,37 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     }
     const { ingredients, totalPrice, isPurchasable, isVisible } = this.state
     const disabled = this.checkIfZero(ingredients)
+    const context = {
+      ingredients: this.state.ingredients,
+      setIngredients: addRemHandlers,
+      isDisabled: disabled,
+      totalPrice: totalPrice,
+      isPurchasable: isPurchasable,
+      isVisible: isVisible,
+      showModal: this.showSummary
+    }
     return (
       <>
+      <Context.Provider value={context}>
         <Modal isVisible={isVisible}>
           <Backdrop isVisible={isVisible} clicked={this.showSummary} />
           <StyledSummary>
-            <OrderSummary ingredients={ingredients} />
+            <OrderSummary
+              ingredients={ingredients}
+            />
           </StyledSummary>
         </Modal>
         <Burger ingredients={ingredients} />
-        <BuildControls 
-          setIngredients={addRemHandlers} 
+        <BuildControls
+          context={this.context.ingredients}
+          setIngredients={addRemHandlers}
           isDisabled={disabled}
           totalPrice={totalPrice}
           isPurchasable={isPurchasable}
           isVisible={isVisible}
           showModal={this.showSummary}
         />
+      </Context.Provider>
       </>
     )
   }
