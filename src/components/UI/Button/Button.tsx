@@ -26,7 +26,12 @@ const StyledButton = styled.button`
   }
 `
 
-const Button:React.FunctionComponent = () => {
+interface IButtonProps {
+  type: string
+  onClick: Function
+}
+
+const Button:React.FunctionComponent<IButtonProps> = ({ type, onClick }) => {
   return (
     <>
       <StyledButton>Click me!</StyledButton>
