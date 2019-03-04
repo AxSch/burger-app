@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import NavItems from '../NavItems/NavItems';
 
 const StyledToolBar = styled.header`
   height: 56px;
@@ -7,7 +8,7 @@ const StyledToolBar = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  background-colour: #703B09;
+  background-color: #703B09;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,7 +27,7 @@ const ToolBar: React.FunctionComponent<{}> = () => {
     <div>THE CHUMBUCKET</div>
     <div>MENU</div>
       <StyledToolBarNav>
-        ...
+        <NavItems />
       </StyledToolBarNav>
     </StyledToolBar>
   )
