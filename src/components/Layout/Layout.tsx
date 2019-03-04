@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import ToolBar from '../../components/Navigation/Toolbar/Toolbar';
 import SideBar from '../../components/Navigation/SideDrawer/SideDrawer';
+import SideBarContext from '../../context/SideBarContext';
 
 const StyledLayout = styled.div`
   width: 100%;
@@ -13,14 +14,24 @@ const StyledLayout = styled.div`
   font-size: 1.2rem;
 `
 
-const layout = (props: any) => (
-  <>
-    <ToolBar />
-    <SideBar />
-    <StyledLayout>
-      {props.children}
-    </StyledLayout>
-  </>
-)
+const Layout:FunctionComponent = ({ children }) => {
+  const [isVisible, setIsVisible] = React.useState(true)
+  const context = {
+    isVisible: isVisible,
+    setIsVisible: setIsVisible
+  }
 
-export default layout
+  return (
+    <>
+      <SideBarContext.Provider value={context}>
+        <ToolBar />
+        <SideBar />
+      </SideBarContext.Provider>
+      <StyledLayout>
+        {children}
+      </StyledLayout>
+    </>
+  )
+}
+
+export default Layout
