@@ -15,7 +15,7 @@ const StyledLayout = styled.div`
 `
 
 const Layout:FunctionComponent = ({ children }) => {
-  const [isVisible, setIsVisible] = React.useState(true)
+  const [isVisible, setIsVisible] = React.useState(false)
   const context = {
     isVisible: isVisible,
     setIsVisible: setIsVisible
