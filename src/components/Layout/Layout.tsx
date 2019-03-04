@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const StyledLayout = styled.div`
   width: 100%;
   margin: auto;
-  height: 250px;
+  height: 100%;
   overflow: scroll;
   text-align: center;
   font-weight: 200;
