@@ -59,16 +59,7 @@ interface IControl {
   type: string
 }
 
-interface IBuildControlsProps {
-  setIngredients: IAddRemHandlers
-  isDisabled: IBurgerIngredients
-  totalPrice: number
-  isPurchasable: boolean
-  isVisible: boolean
-  showModal: Function
-}
-
-const BuildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled, showModal }) => {
+const BuildControls: React.FunctionComponent<{}> = () => {
   const controls: IControl[] = [
     { label: 'Salad', type: 'salad' },
     { label: 'Bacon', type: 'bacon' },
@@ -85,8 +76,6 @@ const BuildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngred
           key={ctrl.label}
           ingredientLabel={ctrl.label}
           type={ctrl.type}
-          addRemHandlers={setIngredients}
-          isDisabled={isDisabled}
         />
       )
     })
@@ -99,7 +88,7 @@ const BuildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngred
       </div>
       {renderControl(controls)}
       <div>
-        <StyledButton disabled={!context.isPurchasable} onClick={() => showModal()}>ORDER NOW</StyledButton>
+        <StyledButton disabled={!context.isPurchasable} onClick={() => context.showModal()}>ORDER NOW</StyledButton>
       </div>
     </StyledControls>
   )
