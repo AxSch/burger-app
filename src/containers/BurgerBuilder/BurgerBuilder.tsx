@@ -156,6 +156,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
             <StyledSummary>
               <OrderSummary
                 ingredients={ingredients}
+                onClick={this.purchaseCheckout}
               />
             </StyledSummary>
           </Modal>
