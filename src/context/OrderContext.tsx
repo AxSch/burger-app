@@ -3,17 +3,14 @@ import { IBurgerIngredients, IAddRemHandlers } from 'containers/BurgerBuilder/Bu
 import { ingredientsObj } from '../utils/constants';
 
 interface IOrderContext {
-  ingredients: IBurgerIngredients
   setIngredients: IAddRemHandlers
   isDisabled: IBurgerIngredients
   totalPrice: number
   isPurchasable: boolean
-  isVisible: boolean
   showModal: Function
 }
 
 const OrderContext = React.createContext<IOrderContext>({
-  ingredients: ingredientsObj,
   setIngredients: {
     subHandler: Function,
     addHandler: Function,
@@ -21,7 +18,6 @@ const OrderContext = React.createContext<IOrderContext>({
   isDisabled: ingredientsObj,
   totalPrice: 0,
   isPurchasable: false,
-  isVisible: false,
   showModal: () => { }
 })
 
