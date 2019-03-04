@@ -29,13 +29,16 @@ const StyledItemLink = styled.a`
   }
 `
 
+interface INavItem {
+  link: string
+  children: string
+}
 
-
-const NavItem: React.FunctionComponent = () => {
+const NavItem: React.FunctionComponent<INavItem> = ({ link, children }) => {
   return (
     <>
       <StyledNavItem>
-        <StyledItemLink href="/"></StyledItemLink>
+        <StyledItemLink href={link}>{children}</StyledItemLink>
       </StyledNavItem>
     </> 
   )
