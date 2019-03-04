@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import BuildControl from './BuildControl/BuildControl'
-import { IAddRemHandlers, IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder';
+import { IAddRemHandlers, IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder'
+import OrderContext from '../../../context/OrderContext'
 
 const StyledControls = styled.div`
   width: 100%;
@@ -67,14 +68,15 @@ interface IBuildControlsProps {
   showModal: Function
 }
 
-const BuildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled, totalPrice, isPurchasable, showModal, isVisible }) => {
-
+const BuildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngredients, isDisabled, showModal }) => {
   const controls: IControl[] = [
     { label: 'Salad', type: 'salad' },
     { label: 'Bacon', type: 'bacon' },
     { label: 'Cheese', type: 'cheese' },
     { label: 'Meat', type: 'meat' }
   ]
+  
+  const context = React.useContext(OrderContext)
 
   const renderControl = (controls: IControl[]) => {
     return controls.map(ctrl => {
@@ -89,15 +91,15 @@ const BuildControls: React.FunctionComponent<IBuildControlsProps> = ({ setIngred
       )
     })
   }
-
+  
   return (
     <StyledControls>
       <div>
-        <p>Total Price: £{totalPrice.toFixed(2)}</p>
+        <p>Total Price: £{context.totalPrice.toFixed(2)}</p>
       </div>
       {renderControl(controls)}
       <div>
-        <StyledButton disabled={!isPurchasable} onClick={() => showModal()}>ORDER NOW</StyledButton>
+        <StyledButton disabled={!context.isPurchasable} onClick={() => showModal()}>ORDER NOW</StyledButton>
       </div>
     </StyledControls>
   )
