@@ -6,6 +6,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Backdrop from '../../components/UI/Backdrop/Backdrop'
 import styled from 'styled-components'
 import { ingredientsObj, pricesObj } from '../../utils/constants'
+import OrderContext from '../../context/OrderContext';
 
 const StyledSummary = styled.div`
   position: fixed;
@@ -50,28 +51,7 @@ export interface IAddRemHandlers {
   subHandler: Function
   addHandler: Function
 }
-export interface IContext {
-  ingredients: IBurgerIngredients
-  setIngredients: IAddRemHandlers
-  isDisabled: IBurgerIngredients
-  totalPrice: number
-  isPurchasable: boolean
-  isVisible: boolean
-  showModal: Function
-}
 
-const Context = React.createContext<IContext>({
-  ingredients: ingredientsObj,
-  setIngredients: {
-    subHandler: Function,
-    addHandler: Function,
-  },
-  isDisabled: ingredientsObj,
-  totalPrice: 0,
-  isPurchasable: false,
-  isVisible: false,
-  showModal: () => { }
-})
 
 class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   constructor(props) {
@@ -159,6 +139,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     }
     const { ingredients, totalPrice, isPurchasable, isVisible } = this.state
     const disabled = this.checkIfZero(ingredients)
+    
     const context = {
       ingredients: this.state.ingredients,
       setIngredients: addRemHandlers,
@@ -171,7 +152,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
 
     return (
       <>
-        <Context.Provider value={context}>
+        <OrderContext.Provider value={context}>
           <Modal isVisible={isVisible}>
             <Backdrop isVisible={isVisible} clicked={this.showSummary} />
             <StyledSummary>
@@ -182,7 +163,6 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
           </Modal>
           <Burger ingredients={ingredients} />
           <BuildControls
-            context={this.context.ingredients}
             setIngredients={addRemHandlers}
             isDisabled={disabled}
             totalPrice={totalPrice}
@@ -190,7 +170,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
             isVisible={isVisible}
             showModal={this.showSummary}
           />
-        </Context.Provider>
+        </OrderContext.Provider>
       </>
     )
   }
