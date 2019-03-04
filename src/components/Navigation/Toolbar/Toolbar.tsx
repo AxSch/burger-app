@@ -23,8 +23,8 @@ const StyledToolBarNav = styled.nav`
 const ToolBar: React.FunctionComponent<{}> = () => {
   return (
     <StyledToolBar>
-      <div>LOGO</div>
-      <div>MENU</div>
+    <div>THE CHUMBUCKET</div>
+    <div>MENU</div>
       <StyledToolBarNav>
         ...
       </StyledToolBarNav>
