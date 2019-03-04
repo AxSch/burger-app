@@ -19,10 +19,9 @@ const StyledItemLink = styled.a`
   box-sizing: border-box;
   display: block;
 
-  :hover {
-
-  }
-  :active {
+  :hover,
+  :active,
+  &.active {
     background-color: #8F5C2C;
     border-bottom: 4px solid #40A4C8;
     color: white;
@@ -32,13 +31,14 @@ const StyledItemLink = styled.a`
 interface INavItem {
   link: string
   children: string
+  isActive: boolean
 }
 
-const NavItem: React.FunctionComponent<INavItem> = ({ link, children }) => {
+const NavItem: React.FunctionComponent<INavItem> = ({ link, children, isActive }) => {
   return (
     <>
       <StyledNavItem>
-        <StyledItemLink href={link}>{children}</StyledItemLink>
+        <StyledItemLink className={isActive ? "active" : null} href={link}>{children}</StyledItemLink>
       </StyledNavItem>
     </> 
   )
