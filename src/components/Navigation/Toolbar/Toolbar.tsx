@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import NavItems from '../NavItems/NavItems';
-import SideBarContext from '../../../context/SideBarContext';
+import NavItems from '../NavItems/NavItems'
+import MenuToggle from '../MenuToggle/MenuToggle'
 
 const StyledToolBar = styled.header`
   height: 56px;
@@ -26,11 +26,10 @@ const StyledToolBarNav = styled.nav`
 `
 
 const ToolBar: React.FunctionComponent<{}> = () => {
-  const context = useContext(SideBarContext)
   return (
     <StyledToolBar>
-    <div>THE CHUMBUCKET</div>
-    <div onClick={() => context.setIsVisible(!context.isVisible)}>MENU</div>
+      <div>THE CHUMBUCKET</div>
+      <MenuToggle />
       <StyledToolBarNav>
         <NavItems />
       </StyledToolBarNav>
