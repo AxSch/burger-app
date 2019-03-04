@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react'
-import { IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder';
+import { IBurgerIngredients } from 'containers/BurgerBuilder/BurgerBuilder'
 
 interface IOrderSummary {
   ingredients: IBurgerIngredients
 }
 
-const OrderSummary:FunctionComponent<IOrderSummary> = ({ ingredients }) => {
+const OrderSummary: FunctionComponent<IOrderSummary> = ({ ingredients }) => {
   const ingredientsSummary = ingredients => {
     return Object.keys(ingredients).map(ingrnt => {
       return <li key={ingrnt}><span style={{ textTransform: 'capitalize' }}>{ingrnt}</span>: {ingredients[ingrnt]}</li>
