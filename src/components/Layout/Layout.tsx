@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import ToolBar from '../../components/Navigation/Toolbar/Toolbar';
+import SideBar from '../../components/Navigation/SideDrawer/SideDrawer';
 
 const StyledLayout = styled.div`
   width: 100%;
@@ -15,6 +16,7 @@ const StyledLayout = styled.div`
 const layout = (props: any) => (
   <>
     <ToolBar />
+    <SideBar />
     <StyledLayout>
       {props.children}
     </StyledLayout>
