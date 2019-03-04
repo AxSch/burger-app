@@ -2,9 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledButton = styled.button`
-  background-color: transparent;
   border: none;
-  color: white;
   outline: none;
   cursor: pointer;
   font: inherit;
@@ -17,12 +15,12 @@ const StyledButton = styled.button`
     padding-left: 0;
   }
 
-  .Success {
-    color: #5C9210;
+  &.Success {
+    background-color: #5C9210;
   }
 
-  .Danger {
-    color: #944317;
+  &.Danger {
+    background-color: #944317;
   }
 `
 
@@ -31,10 +29,10 @@ interface IButtonProps {
   onClick: Function
 }
 
-const Button:React.FunctionComponent<IButtonProps> = ({ type, onClick }) => {
+const Button:React.FunctionComponent<IButtonProps> = ({ type, onClick, children }) => {
   return (
     <>
-      <StyledButton>Click me!</StyledButton>
+      <StyledButton className={type} onClick={onClick}>{children}</StyledButton>
     </>
   )
 }
