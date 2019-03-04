@@ -141,12 +141,10 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
     const disabled = this.checkIfZero(ingredients)
     
     const context = {
-      ingredients: this.state.ingredients,
       setIngredients: addRemHandlers,
       isDisabled: disabled,
       totalPrice: totalPrice,
       isPurchasable: isPurchasable,
-      isVisible: isVisible,
       showModal: this.showSummary
     }
 
@@ -162,14 +160,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
             </StyledSummary>
           </Modal>
           <Burger ingredients={ingredients} />
-          <BuildControls
-            setIngredients={addRemHandlers}
-            isDisabled={disabled}
-            totalPrice={totalPrice}
-            isPurchasable={isPurchasable}
-            isVisible={isVisible}
-            showModal={this.showSummary}
-          />
+          <BuildControls />
         </OrderContext.Provider>
       </>
     )
