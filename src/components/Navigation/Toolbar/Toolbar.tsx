@@ -19,6 +19,9 @@ const StyledToolBar = styled.header`
 
 const StyledToolBarNav = styled.nav`
   height: 100%;
+  @media(max-width: 499px){
+    display: none;
+  }
 `
 
 const ToolBar: React.FunctionComponent<{}> = () => {
