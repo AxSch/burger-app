@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { IAddRemHandlers, IBurgerIngredients } from '../../../../containers/BurgerBuilder/BurgerBuilder';
+import OrderContext from '../../../../context/OrderContext'
+
 
 const StyledControl = styled.div`
   display: flex;
@@ -27,8 +28,6 @@ const StyledControl = styled.div`
     background-color: #99703F;
     color: white;
   }
-  
-  
 `
 
 const StyledLabel = styled.div`
@@ -64,18 +63,18 @@ const StyledButton = styled.button`
 interface IbuildControlProps {
   ingredientLabel: string
   type: string
-  addRemHandlers: IAddRemHandlers
-  isDisabled: IBurgerIngredients
 }
 
-const buildControl: React.FunctionComponent<IbuildControlProps> = ({ingredientLabel, addRemHandlers, type, isDisabled}) => {
+const BuildControl: React.FunctionComponent<IbuildControlProps> = ({ ingredientLabel, type }) => {
+  const context = React.useContext(OrderContext)
+
   return (
     <StyledControl>
       <StyledLabel>{ingredientLabel}</StyledLabel>
-      <StyledButton className="More" onClick={() => addRemHandlers.addHandler(type)}>Add</StyledButton>
-      <StyledButton className="Less" disabled={isDisabled[type]} onClick={() => addRemHandlers.subHandler(type)}>Remove</StyledButton>
+      <StyledButton className="More" onClick={() => context.setIngredients.addHandler(type)}>Add</StyledButton>
+      <StyledButton className="Less" disabled={context.isDisabled[type]} onClick={() => context.setIngredients.subHandler(type)}>Remove</StyledButton>
     </StyledControl>
   )
 }
 
-export default buildControl
+export default BuildControl
