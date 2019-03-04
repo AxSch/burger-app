@@ -6,7 +6,7 @@ import SideBarContext from '../../context/SideBarContext';
 
 const StyledLayout = styled.div`
   width: 100%;
-  margin-top: 72px;
+  margin-top: 80px;
   height: 100%;
   overflow: scroll;
   text-align: center;
