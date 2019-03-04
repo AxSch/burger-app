@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import NavItems from '../NavItems/NavItems'
+import Backdrop from '../../../components/UI/Backdrop/Backdrop'
+import SideBarContext from '../../../context/SideBarContext';
 
 const StyledSideDrawer = styled.div`
   position: fixed;
@@ -33,12 +35,16 @@ interface ISideDrawer {
 }
 
 const SideDrawer: React.FunctionComponent<ISideDrawer> = () => {
+  const context = React.useContext(SideBarContext)
   return (
-    <StyledSideDrawer>
-      <nav>
-        <NavItems />
-      </nav>
-    </StyledSideDrawer>
+    <>
+      <Backdrop isVisible={context.isVisible} clicked={() => context.setIsVisible(false)} />
+      <StyledSideDrawer>
+        <nav>
+          <NavItems />
+        </nav>
+      </StyledSideDrawer>
+    </>
   )
 }
 
