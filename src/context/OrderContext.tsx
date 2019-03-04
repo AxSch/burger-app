@@ -1,6 +1,6 @@
 import React from 'react'
 import { IBurgerIngredients, IAddRemHandlers } from 'containers/BurgerBuilder/BurgerBuilder'
-import { ingredientsObj } from 'utils/constants';
+import { ingredientsObj } from '../utils/constants';
 
 interface IOrderContext {
   ingredients: IBurgerIngredients
