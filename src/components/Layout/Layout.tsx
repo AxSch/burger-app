@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import ToolBar from 'components/Navigation/Toolbar/Toolbar';
+import ToolBar from '../../components/Navigation/Toolbar/Toolbar';
 
 const StyledLayout = styled.div`
   width: 100%;
-  margin: auto;
+  margin-top: 72px;
   height: 100%;
   overflow: scroll;
   text-align: center;
