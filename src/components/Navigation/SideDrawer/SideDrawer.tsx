@@ -38,7 +38,7 @@ const SideDrawer: React.FunctionComponent<ISideDrawer> = () => {
   const context = React.useContext(SideBarContext)
   return (
     <>
-      <Backdrop isVisible={context.isVisible} clicked={() => context.setIsVisible(false)} />
+      <Backdrop isVisible={context.isVisible} clicked={() => context.setIsVisible(!context.isVisible)} />
       <StyledSideDrawer className={context.isVisible ? "open" : "close"}>
         <nav>
           <NavItems />
