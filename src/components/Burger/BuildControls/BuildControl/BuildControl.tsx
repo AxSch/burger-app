@@ -37,7 +37,7 @@ const StyledLabel = styled.div`
 `
 
 const StyledButton = styled.button`
-  width: 20%
+  width: auto;
   display: block;
   font: inherit;
   padding: 5px;

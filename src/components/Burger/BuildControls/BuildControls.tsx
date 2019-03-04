@@ -15,7 +15,7 @@ const StyledControls = styled.div`
 `
 
 const StyledButton = styled.button`
-  width: 30%
+  width: auto;
   background-color: #DAD735;
   outline: none;
   cursor: pointer;
