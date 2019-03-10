@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import BuildControl from './BuildControl/BuildControl'
-import { IAddRemHandlers, IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder'
 import OrderContext from '../../../context/OrderContext'
 
 const StyledControls = styled.div`
@@ -86,7 +85,7 @@ const BuildControls: React.FunctionComponent<{}> = () => {
       <div>
         <p>Total Price: £{context.totalPrice.toFixed(2)}</p>
       </div>
-      {renderControl(controls)}
+        {renderControl(controls)}
       <div>
         <StyledButton disabled={!context.isPurchasable} onClick={() => context.showModal()}>ORDER NOW</StyledButton>
       </div>
