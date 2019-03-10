@@ -6,7 +6,8 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Backdrop from '../../components/UI/Backdrop/Backdrop'
 import styled from 'styled-components'
 import { ingredientsObj, pricesObj } from '../../utils/constants'
-import OrderContext from '../../context/OrderContext';
+import OrderContext from '../../context/OrderContext'
+import OrdersClient from '../../http/OrdersClient'
 
 const StyledSummary = styled.div`
   position: fixed;
@@ -129,7 +130,25 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   }
 
   private purchaseCheckout = () => {
-    alert('One krabby patty coming up!')
+    // alert('One krabby patty coming up!')
+    const { ingredients, totalPrice } = this.state
+    const order = {
+      ingredients: ingredients,
+      cost: totalPrice,
+      customer: {
+        name: 'Joe',
+        address: {
+          street: 'Test',
+          postCode: 'TE57 2OO',
+          town: 'TestyTrap'
+        },
+        email: 'test@test.com'
+      },
+      deliveryMethod: 'driver'
+    }
+    OrdersClient.post('/orders.json', order) // using a Firebase endpoint
+    .then(res => console.log(res))
+    .catch(error => console.log(error))
   }
 
   public render() {
