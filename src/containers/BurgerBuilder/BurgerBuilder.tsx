@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { ingredientsObj, pricesObj } from '../../utils/constants'
 import OrderContext from '../../context/OrderContext'
 import OrdersClient from '../../http/OrdersClient'
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const StyledSummary = styled.div`
   position: fixed;
@@ -46,6 +47,7 @@ interface IBurgerBuilderState {
   totalPrice: number
   isPurchasable: boolean
   isVisible: boolean
+  isLoading: boolean
 }
 
 export interface IAddRemHandlers {
@@ -62,7 +64,8 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       prices: pricesObj,
       totalPrice: 0.20,
       isPurchasable: false,
-      isVisible: false
+      isVisible: false,
+      isLoading: false
     }
   }
 
@@ -130,6 +133,11 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   }
 
   private purchaseCheckout = () => {
+    this.setState((prevState) => {
+      return {
+        isLoading: !prevState.isLoading
+      }
+    })
     // alert('One krabby patty coming up!')
     const { ingredients, totalPrice } = this.state
     const order = {
@@ -147,8 +155,22 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       deliveryMethod: 'driver'
     }
     OrdersClient.post('/orders.json', order) // using a Firebase endpoint
-    .then(res => console.log(res))
-    .catch(error => console.log(error))
+      .then(res => {
+        this.setState((prevState) => {
+          return {
+            isLoading: !prevState.isLoading,
+            isVisible: !prevState.isVisible
+          }
+        })
+      })
+      .catch(error => {
+        this.setState(() => {
+          return {
+            isLoading: false,
+            isVisible: false
+          }
+        })
+      })
   }
 
   public render() {
@@ -156,9 +178,9 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       addHandler: this.addIngrdHandler,
       subHandler: this.subIngrdHandler
     }
-    const { ingredients, totalPrice, isPurchasable, isVisible } = this.state
+    const { ingredients, totalPrice, isPurchasable, isVisible, isLoading } = this.state
     const disabled = this.checkIfZero(ingredients)
-    
+
     const context = {
       setIngredients: addRemHandlers,
       isDisabled: disabled,
@@ -167,16 +189,25 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       showModal: this.showSummary
     }
 
+    let orderSummary = (
+      <OrderSummary
+        ingredients={ingredients}
+        onClick={this.purchaseCheckout}
+      />
+    )
+    if (isLoading) {
+      orderSummary = (
+        <Spinner />
+      )
+    }
+
     return (
       <>
         <OrderContext.Provider value={context}>
           <Modal isVisible={isVisible}>
             <Backdrop isVisible={isVisible} clicked={this.showSummary} />
             <StyledSummary>
-              <OrderSummary
-                ingredients={ingredients}
-                onClick={this.purchaseCheckout}
-              />
+              {orderSummary}
             </StyledSummary>
           </Modal>
           <Burger ingredients={ingredients} />
