@@ -4,7 +4,7 @@ import { ingredientsObj } from '../utils/constants';
 
 interface IOrderContext {
   setIngredients: IAddRemHandlers
-  isDisabled: IBurgerIngredients
+  isDisabled: IBurgerIngredients | null
   totalPrice: number
   isPurchasable: boolean
   showModal: Function
