@@ -75,7 +75,6 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   public componentDidMount() {
     OrdersClient.get('/ingredients.json') // using a Firebase endpoint
       .then(res => {
-        console.log(res)
         this.setState((prevState) => {
           return {
             ingredients: res.data,
@@ -228,7 +227,6 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
         <Spinner />
       )
     }
-    console.log(ingredients)
     return (
       <>
         <OrderContext.Provider value={context}>
