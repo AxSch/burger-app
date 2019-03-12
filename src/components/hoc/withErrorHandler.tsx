@@ -10,11 +10,11 @@ const withErrorHandler = (Component, OrderClient) => {
       this.state = {
         error: {} as Error
       }
-      OrderClient.interceptors.request.use(req => {
+      this.reqInceptor = OrderClient.interceptors.request.use(req => {
         this.setState({ error: {} })
         return req
       })
-      OrderClient.interceptors.response.use(
+      this.resInceptor = OrderClient.interceptors.response.use(
         res => res,
         error => {
           this.setState({ error: error })
@@ -23,6 +23,11 @@ const withErrorHandler = (Component, OrderClient) => {
 
     errorHandler = () => {
       this.setState({ error: {} })
+    }
+
+    componentWillUnmount() {
+      OrderClient.interceptors.request.eject(this.reqInceptor)
+      OrderClient.interceptors.response.eject(this.resInceptor)
     }
 
     render() {
