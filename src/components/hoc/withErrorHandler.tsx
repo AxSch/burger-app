@@ -5,11 +5,11 @@ import { StyledSummary } from '../../containers/BurgerBuilder/BurgerBuilder'
 
 const withErrorHandler = (Component, OrderClient) => {
   return class extends Component {
-    state = {
-      error: {} as Error
-    }
-
-    componentDidMount() {
+    constructor(props) {
+      super(props)
+      this.state = {
+        error: {} as Error
+      }
       OrderClient.interceptors.request.use(req => {
         this.setState({ error: {} })
         return req
