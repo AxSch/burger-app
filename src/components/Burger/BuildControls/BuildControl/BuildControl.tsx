@@ -72,7 +72,7 @@ const BuildControl: React.FunctionComponent<IbuildControlProps> = ({ ingredientL
     <StyledControl>
       <StyledLabel>{ingredientLabel}</StyledLabel>
       <StyledButton className="More" onClick={() => context.setIngredients.addHandler(type)}>Add</StyledButton>
-      <StyledButton className="Less" disabled={context.isDisabled[type]} onClick={() => context.setIngredients.subHandler(type)}>Remove</StyledButton>
+      <StyledButton className="Less" disabled={context.isDisabled ? context.isDisabled[type]: null} onClick={() => context.setIngredients.subHandler(type)}>Remove</StyledButton>
     </StyledControl>
   )
 }
