@@ -1,10 +1,7 @@
 import React from 'react'
 import Modal from '../UI/Modal/Modal'
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
-
-interface IErrorHandlerProps {
-  isVisible: boolean
-}
+import Backdrop from '../../components/UI/Backdrop/Backdrop'
+import { StyledSummary } from '../../containers/BurgerBuilder/BurgerBuilder'
 
 const withErrorHandler = (Component, OrderClient) => {
   return class extends Component {
@@ -14,16 +11,18 @@ const withErrorHandler = (Component, OrderClient) => {
 
     componentDidMount() {
       OrderClient.interceptors.request.use(req => {
-        this.setState({error: {}})
+        this.setState({ error: {} })
         return req
       })
-      OrderClient.interceptors.request.use(res => res, error => {
-        this.setState({error: error}) 
-      })
+      OrderClient.interceptors.response.use(
+        res => res,
+        error => {
+          this.setState({ error: error })
+        })
     }
 
     errorHandler = () => {
-      this.setState({error: {}})
+      this.setState({ error: {} })
     }
 
     render() {
@@ -32,7 +31,9 @@ const withErrorHandler = (Component, OrderClient) => {
       return (
         <>
           <Modal isVisible={isError ? isError : false}>
-            {isError ? error.message : null}
+            <StyledSummary>
+              {isError ? error.message : null}
+            </StyledSummary>
           </Modal>
           <Backdrop isVisible={isError ? isError : false} clicked={this.errorHandler} />
           <Component {...this.props} />
