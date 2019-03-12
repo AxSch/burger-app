@@ -3,7 +3,7 @@ import Ingredient from './Ingredients/Ingredients'
 import styled from 'styled-components'
 import { IBurgerIngredients } from '../../containers/BurgerBuilder/BurgerBuilder'
 
-const StyledBurger = styled.div`
+export const StyledBurger = styled.div`
   width: 100%;
   margin: auto;
   height: 250px;
@@ -33,7 +33,7 @@ interface IFunctionComponentProps {
 }
 
 
-const burger: React.FunctionComponent<IFunctionComponentProps> = ({ ingredients }) => {
+const Burger: React.FunctionComponent<IFunctionComponentProps> = ({ ingredients }) => {
   const renderIngrds = ingredients => {
     const ingreds = Object.keys(ingredients).map(ingrd => {
       return [...Array(ingredients[ingrd])].map((_, idx) => {
@@ -56,4 +56,4 @@ const burger: React.FunctionComponent<IFunctionComponentProps> = ({ ingredients 
   )
 }
 
-export default burger
+export default Burger
