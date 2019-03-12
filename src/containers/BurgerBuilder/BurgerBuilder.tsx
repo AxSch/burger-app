@@ -75,7 +75,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   }
 
   public componentDidMount() {
-    OrdersClient.get('/ingredients') // using a Firebase endpoint
+    OrdersClient.get('/ingredients.json') // using a Firebase endpoint
       .then(res => {
         this.setState((prevState) => {
           return {
@@ -165,7 +165,6 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
         isLoading: !prevState.isLoading
       }
     })
-    // alert('One krabby patty coming up!')
     const { ingredients, totalPrice } = this.state
     const order = {
       ingredients: ingredients,
