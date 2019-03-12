@@ -8,7 +8,10 @@ import styled from 'styled-components'
 import { ingredientsObj, pricesObj } from '../../utils/constants'
 import OrderContext from '../../context/OrderContext'
 import OrdersClient from '../../http/OrdersClient'
-import Spinner from '../../components/UI/Spinner/Spinner';
+import Spinner from '../../components/UI/Spinner/Spinner'
+import withErrorHandler from '../../components/hoc/withErrorHandler'
+import * as moment from 'moment'
+
 
 const StyledSummary = styled.div`
   position: fixed;
@@ -150,8 +153,9 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
           postCode: 'TE57 2OO',
           town: 'TestyTrap'
         },
-        email: 'test@test.com'
+        email: 'test@test.com',
       },
+      timestamp: moment().format("DD-MM-YYYY"),
       deliveryMethod: 'driver'
     }
     OrdersClient.post('/orders.json', order) // using a Firebase endpoint
@@ -218,4 +222,4 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   }
 }
 
-export default BurgerBuilder
+export default withErrorHandler(BurgerBuilder, OrdersClient)
