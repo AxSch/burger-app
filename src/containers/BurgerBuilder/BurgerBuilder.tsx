@@ -13,7 +13,7 @@ import withErrorHandler from '../../components/hoc/withErrorHandler'
 import * as moment from 'moment'
 
 
-const StyledSummary = styled.div`
+export const StyledSummary = styled.div`
   position: fixed;
   z-index: 500;
   background-color: white;
@@ -45,7 +45,7 @@ export interface IIPriceState {
 }
 
 interface IBurgerBuilderState {
-  ingredients: IBurgerIngredients
+  ingredients: null | IBurgerIngredients
   prices: IBurgerIngredients
   totalPrice: number
   isPurchasable: boolean
@@ -63,13 +63,33 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   constructor(props) {
     super(props)
     this.state = {
-      ingredients: ingredientsObj,
+      ingredients: null,
       prices: pricesObj,
       totalPrice: 0.20,
       isPurchasable: false,
       isVisible: false,
       isLoading: false
     }
+  }
+
+  public componentDidMount() {
+    OrdersClient.get('/ingredients.json') // using a Firebase endpoint
+      .then(res => {
+        console.log(res)
+        this.setState((prevState) => {
+          return {
+            ingredients: res.data,
+          }
+        })
+      })
+      .catch(error => {
+        this.setState(() => {
+          return {
+            isLoading: false,
+            isVisible: false
+          }
+        })
+      })
   }
 
   private updatePurchase = (ingredients: IBurgerIngredients) => {
@@ -87,34 +107,38 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
 
   private addIngrdHandler = (type: string) => {
     const { ingredients, prices } = this.state
-    const newState = {
-      ...ingredients,
-    }
-    newState[type] = ingredients[type] + 1
-    this.setState((prevState) => {
-      const newPrice = prevState.totalPrice + prices[type]
-      return {
-        ingredients: newState,
-        totalPrice: newPrice
+    if (ingredients) {
+      const newState = {
+        ...ingredients,
       }
-    })
-    this.updatePurchase(newState)
+      newState[type] = ingredients[type] + 1
+      this.setState((prevState) => {
+        const newPrice = prevState.totalPrice + prices[type]
+        return {
+          ingredients: newState,
+          totalPrice: newPrice
+        }
+      })
+      this.updatePurchase(newState)
+    }
   }
 
   private subIngrdHandler = (type: string) => {
     const { ingredients, prices } = this.state
-    const newState = {
-      ...ingredients,
-    }
-    newState[type] = ingredients[type] - 1
-    this.setState((prevState) => {
-      const newPrice = prevState.totalPrice - prices[type]
-      return {
-        ingredients: newState,
-        totalPrice: newPrice
+    if (ingredients) {
+      const newState = {
+        ...ingredients,
       }
-    })
-    this.updatePurchase(newState)
+      newState[type] = ingredients && ingredients[type] - 1
+      this.setState((prevState) => {
+        const newPrice = prevState.totalPrice - prices[type]
+        return {
+          ingredients: newState,
+          totalPrice: newPrice
+        }
+      })
+      this.updatePurchase(newState)
+    }
   }
 
   private checkIfZero = (ingredients: IBurgerIngredients) => {
@@ -158,7 +182,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       timestamp: moment().format("DD-MM-YYYY"),
       deliveryMethod: 'driver'
     }
-    OrdersClient.post('/orders.json', order) // using a Firebase endpoint
+    OrdersClient.post('/orders', order) // using a Firebase endpoint
       .then(res => {
         this.setState((prevState) => {
           return {
@@ -183,7 +207,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       subHandler: this.subIngrdHandler
     }
     const { ingredients, totalPrice, isPurchasable, isVisible, isLoading } = this.state
-    const disabled = this.checkIfZero(ingredients)
+    const disabled = ingredients && this.checkIfZero(ingredients)
 
     const context = {
       setIngredients: addRemHandlers,
@@ -193,7 +217,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       showModal: this.showSummary
     }
 
-    let orderSummary = (
+    let orderSummary = ingredients && (
       <OrderSummary
         ingredients={ingredients}
         onClick={this.purchaseCheckout}
@@ -204,7 +228,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
         <Spinner />
       )
     }
-
+    console.log(ingredients)
     return (
       <>
         <OrderContext.Provider value={context}>
@@ -214,7 +238,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
               {orderSummary}
             </StyledSummary>
           </Modal>
-          <Burger ingredients={ingredients} />
+          {ingredients ? <Burger ingredients={ingredients} /> : <Spinner />}
           <BuildControls />
         </OrderContext.Provider>
       </>
