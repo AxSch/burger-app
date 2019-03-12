@@ -1,5 +1,5 @@
 import React from 'react'
-import Burger from '../../components/Burger/Burger'
+import Burger, { StyledBurger } from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
@@ -51,6 +51,7 @@ interface IBurgerBuilderState {
   isPurchasable: boolean
   isVisible: boolean
   isLoading: boolean
+  error: boolean
 }
 
 export interface IAddRemHandlers {
@@ -68,24 +69,24 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       totalPrice: 0.20,
       isPurchasable: false,
       isVisible: false,
-      isLoading: false
+      isLoading: false,
+      error: false
     }
   }
 
   public componentDidMount() {
-    OrdersClient.get('/ingredients.json') // using a Firebase endpoint
+    OrdersClient.get('/ingredients') // using a Firebase endpoint
       .then(res => {
         this.setState((prevState) => {
           return {
-            ingredients: res.data,
+            ingredients: res && res.data,
           }
         })
       })
       .catch(error => {
         this.setState(() => {
           return {
-            isLoading: false,
-            isVisible: false
+            error: true
           }
         })
       })
@@ -181,7 +182,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       timestamp: moment().format("DD-MM-YYYY"),
       deliveryMethod: 'driver'
     }
-    OrdersClient.post('/orders', order) // using a Firebase endpoint
+    OrdersClient.post('/orders.json', order) // using a Firebase endpoint
       .then(res => {
         this.setState((prevState) => {
           return {
@@ -200,12 +201,25 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       })
   }
 
+  private renderIngredientsError = (error: boolean, ingredients) => {
+    if (error) {
+      return (
+        <StyledBurger>
+          <p>The Krusty Krab ran us out of business... again</p>
+        </StyledBurger>
+      )
+    } else {
+      const burger = ingredients ? <Burger ingredients={ingredients} /> : <Spinner />
+      return burger
+    }
+  }
+
   public render() {
     const addRemHandlers: IAddRemHandlers = {
       addHandler: this.addIngrdHandler,
       subHandler: this.subIngrdHandler
     }
-    const { ingredients, totalPrice, isPurchasable, isVisible, isLoading } = this.state
+    const { ingredients, totalPrice, isPurchasable, isVisible, isLoading, error } = this.state
     const disabled = ingredients && this.checkIfZero(ingredients)
 
     const context = {
@@ -222,6 +236,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
         onClick={this.purchaseCheckout}
       />
     )
+    
     if (isLoading) {
       orderSummary = (
         <Spinner />
@@ -236,7 +251,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
               {orderSummary}
             </StyledSummary>
           </Modal>
-          {ingredients ? <Burger ingredients={ingredients} /> : <Spinner />}
+          {this.renderIngredientsError(error, ingredients)}
           <BuildControls />
         </OrderContext.Provider>
       </>
