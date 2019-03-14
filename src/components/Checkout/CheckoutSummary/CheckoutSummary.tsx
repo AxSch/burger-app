@@ -22,7 +22,7 @@ const CheckoutSummary: React.FunctionComponent<ICheckoutSummary> = ({ingredients
   return (
     <StyledSummary>
       <h1>You'll find this to be better than the Krabby Patty!</h1>
-      <div style={{width: '300px', height: '300px', margin: 'auto'}}>
+      <div style={{width: '100%', margin: 'auto'}}>
         <Burger ingredients={ingredients} />
         <Button type="Danger" onClick={()=>{}}>Cancel</Button>
         <Button type="Success" onClick={()=>{}}>Next</Button>
