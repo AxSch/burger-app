@@ -1,9 +1,9 @@
 import React from 'react'
-import { IBurgerIngredients, IAddRemHandlers } from 'containers/BurgerBuilder/BurgerBuilder'
+import { IBurgerIngredients, IAddRem } from 'containers/BurgerBuilder/BurgerBuilder'
 import { ingredientsObj } from '../utils/constants';
 
 interface IOrderContext {
-  setIngredients: IAddRemHandlers
+  setIngredients: IAddRem
   isDisabled: IBurgerIngredients | null
   totalPrice: number
   isPurchasable: boolean
@@ -12,8 +12,8 @@ interface IOrderContext {
 
 const OrderContext = React.createContext<IOrderContext>({
   setIngredients: {
-    subHandler: Function,
-    addHandler: Function,
+    sub: Function,
+    add: Function,
   },
   isDisabled: ingredientsObj,
   totalPrice: 0,
