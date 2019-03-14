@@ -71,8 +71,8 @@ const BuildControl: React.FunctionComponent<IbuildControlProps> = ({ ingredientL
   return (
     <StyledControl>
       <StyledLabel>{ingredientLabel}</StyledLabel>
-      <StyledButton className="More" onClick={() => context.setIngredients.addHandler(type)}>Add</StyledButton>
-      <StyledButton className="Less" disabled={context.isDisabled ? context.isDisabled[type]: null} onClick={() => context.setIngredients.subHandler(type)}>Remove</StyledButton>
+      <StyledButton className="More" onClick={() => context.setIngredients.add(type)}>Add</StyledButton>
+      <StyledButton className="Less" disabled={context.isDisabled ? context.isDisabled[type]: null} onClick={() => context.setIngredients.sub(type)}>Remove</StyledButton>
     </StyledControl>
   )
 }
