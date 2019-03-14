@@ -1,9 +1,9 @@
 import React from 'react'
 import Modal from '../UI/Modal/Modal'
-import Backdrop from '../../components/UI/Backdrop/Backdrop'
+import Backdrop from '../UI/Backdrop/Backdrop'
 import { StyledSummary } from '../../containers/BurgerBuilder/BurgerBuilder'
 
-const withErrorHandler = (Component, OrderClient) => {
+const withError = (Component, OrderClient) => {
   return class extends Component {
     constructor(props) {
       super(props)
@@ -21,7 +21,7 @@ const withErrorHandler = (Component, OrderClient) => {
         })
     }
 
-    errorHandler = () => {
+    confirmError = () => {
       this.setState({ error: {} })
     }
 
@@ -40,7 +40,7 @@ const withErrorHandler = (Component, OrderClient) => {
               {isError ? error.message : null}
             </StyledSummary>
           </Modal>
-          <Backdrop isVisible={isError ? isError : false} clicked={this.errorHandler} />
+          <Backdrop isVisible={isError ? isError : false} clicked={this.setError} />
           <Component {...this.props} />
         </>
       )
@@ -48,4 +48,4 @@ const withErrorHandler = (Component, OrderClient) => {
   }
 }
 
-export default withErrorHandler
+export default withError
