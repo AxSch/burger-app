@@ -9,7 +9,7 @@ import { ingredientsObj, pricesObj } from '../../utils/constants'
 import OrderContext from '../../context/OrderContext'
 import OrdersClient from '../../http/OrdersClient'
 import Spinner from '../../components/UI/Spinner/Spinner'
-import withErrorHandler from '../../components/hoc/withErrorHandler'
+import withError from '../../components/hoc/withError'
 import * as moment from 'moment'
 import { RouteComponentProps } from 'react-router-dom'
 
@@ -55,9 +55,9 @@ interface IBurgerBuilderState {
   error: boolean
 }
 
-export interface IAddRemHandlers {
-  subHandler: Function
-  addHandler: Function
+export interface IAddRem {
+  sub: Function
+  add: Function
 }
 
 
@@ -106,7 +106,7 @@ class BurgerBuilder extends React.Component<{} & RouteComponentProps, IBurgerBui
     })
   }
 
-  private addIngrdHandler = (type: string) => {
+  private addIngrd = (type: string) => {
     const { ingredients, prices } = this.state
     if (ingredients) {
       const newState = {
@@ -124,7 +124,7 @@ class BurgerBuilder extends React.Component<{} & RouteComponentProps, IBurgerBui
     }
   }
 
-  private subIngrdHandler = (type: string) => {
+  private subIngrd = (type: string) => {
     const { ingredients, prices } = this.state
     if (ingredients) {
       const newState = {
@@ -217,16 +217,16 @@ class BurgerBuilder extends React.Component<{} & RouteComponentProps, IBurgerBui
   }
 
   public render() {
-    const addRemHandlers: IAddRemHandlers = {
-      addHandler: this.addIngrdHandler,
-      subHandler: this.subIngrdHandler
+    const addRems: IAddRem = {
+      add: this.addIngrd,
+      sub: this.subIngrd
     }
 
     const { ingredients, totalPrice, isPurchasable, isVisible, isLoading, error } = this.state
     const disabled = ingredients && this.checkIfZero(ingredients)
 
     const context = {
-      setIngredients: addRemHandlers,
+      setIngredients: addRems,
       isDisabled: disabled,
       totalPrice: totalPrice,
       isPurchasable: isPurchasable,
@@ -262,4 +262,4 @@ class BurgerBuilder extends React.Component<{} & RouteComponentProps, IBurgerBui
   }
 }
 
-export default withErrorHandler(BurgerBuilder, OrdersClient)
+export default withError(BurgerBuilder, OrdersClient)
