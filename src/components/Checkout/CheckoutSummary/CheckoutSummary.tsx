@@ -15,17 +15,18 @@ const StyledSummary = styled.div`
 `
 interface ICheckoutSummary {
   ingredients: IBurgerIngredients
-  onClick?: Function
+  cancelCheckout: Function
+  continueCheckout: Function
 }
 
-const CheckoutSummary: React.FunctionComponent<ICheckoutSummary> = ({ingredients, onClick}) => {
+const CheckoutSummary: React.FunctionComponent<ICheckoutSummary> = ({ingredients, cancelCheckout, continueCheckout}) => {
   return (
     <StyledSummary>
       <h1>You'll find this to be better than the Krabby Patty!</h1>
       <div style={{width: '100%', margin: 'auto'}}>
         <Burger ingredients={ingredients} />
-        <Button type="Danger" onClick={()=>{}}>Cancel</Button>
-        <Button type="Success" onClick={()=>{}}>Next</Button>
+        <Button type="Danger" onClick={cancelCheckout()}>Cancel</Button>
+        <Button type="Success" onClick={continueCheckout()}>Next</Button>
       </div>
     </StyledSummary>
   )
