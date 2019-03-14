@@ -11,6 +11,7 @@ import OrdersClient from '../../http/OrdersClient'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../components/hoc/withErrorHandler'
 import * as moment from 'moment'
+import { RouteComponentProps } from 'react-router-dom'
 
 
 export const StyledSummary = styled.div`
@@ -60,7 +61,7 @@ export interface IAddRemHandlers {
 }
 
 
-class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
+class BurgerBuilder extends React.Component<{} & RouteComponentProps, IBurgerBuilderState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -160,6 +161,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
   }
 
   private purchaseCheckout = () => {
+    const { history } = this.props
     this.setState((prevState) => {
       return {
         isLoading: !prevState.isLoading
@@ -181,23 +183,24 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       timestamp: moment().format("DD-MM-YYYY"),
       deliveryMethod: 'driver'
     }
-    OrdersClient.post('/orders.json', order) // using a Firebase endpoint
-      .then(res => {
-        this.setState((prevState) => {
-          return {
-            isLoading: !prevState.isLoading,
-            isVisible: !prevState.isVisible
-          }
-        })
-      })
-      .catch(error => {
-        this.setState(() => {
-          return {
-            isLoading: false,
-            isVisible: false
-          }
-        })
-      })
+    // OrdersClient.post('/orders.json', order) // using a Firebase endpoint
+    //   .then(res => {
+    //     this.setState((prevState) => {
+    //       return {
+    //         isLoading: !prevState.isLoading,
+    //         isVisible: !prevState.isVisible
+    //       }
+    //     })
+    //   })
+    //   .catch(error => {
+    //     this.setState(() => {
+    //       return {
+    //         isLoading: false,
+    //         isVisible: false
+    //       }
+    //     })
+    //   })
+    history.push("/checkout")
   }
 
   private renderIngredientsError = (error: boolean, ingredients) => {
@@ -218,6 +221,7 @@ class BurgerBuilder extends React.Component<{}, IBurgerBuilderState> {
       addHandler: this.addIngrdHandler,
       subHandler: this.subIngrdHandler
     }
+
     const { ingredients, totalPrice, isPurchasable, isVisible, isLoading, error } = this.state
     const disabled = ingredients && this.checkIfZero(ingredients)
 
