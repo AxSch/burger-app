@@ -1,6 +1,4 @@
 import React from 'react'
-import { IBurgerIngredients, IAddRemHandlers } from 'containers/BurgerBuilder/BurgerBuilder'
-import { ingredientsObj } from '../utils/constants';
 
 interface ISideBarContext {
   isVisible: boolean
