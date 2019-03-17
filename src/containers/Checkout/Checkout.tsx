@@ -53,7 +53,7 @@ class Checkout extends React.Component<{} & RouteComponentProps, ICheckoutState>
   public render() {
     const { ingredients } = this.state
     const { match } = this.props
-    console.log(match.url)
+    
     return (
       <div>
         <CheckoutSummary
