@@ -61,7 +61,7 @@ class Checkout extends React.Component<{} & RouteComponentProps, ICheckoutState>
           continueCheckout={this.continueCheckout}
           cancelCheckout={this.cancelCheckout}
         />
-        <Route path={match.url + '/contact-data'} component={ContactData} />
+        <Route path={match.url + '/contact-data'} render={() => <ContactData ingredients={ingredients}/>} />
       </div>
       )
     }
