@@ -3,7 +3,7 @@ import CheckoutSummary from '../../components/Checkout/CheckoutSummary/CheckoutS
 import { IBurgerIngredients } from '../../containers/BurgerBuilder/BurgerBuilder'
 import { RouteComponentProps, Route } from 'react-router-dom'
 import * as queryString from 'query-string'
-import ContactData from '../../components/Checkout/ContactData/ContactData';
+import ContactData from '../../containers/Checkout/ContactData/ContactData';
 
 
 interface ICheckoutState {
