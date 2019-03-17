@@ -2,6 +2,7 @@ import React from 'react'
 import CheckoutSummary from '../../components/Checkout/CheckoutSummary/CheckoutSummary'
 import { IBurgerIngredients } from '../../containers/BurgerBuilder/BurgerBuilder'
 import { RouteComponentProps } from 'react-router-dom'
+import * as queryString from 'query-string'
 
 
 interface ICheckoutState {
@@ -20,6 +21,24 @@ class Checkout extends React.Component<{} & RouteComponentProps,ICheckoutState> 
       },
     }
   }
+
+  componentDidMount() {
+    const { location } = this.props
+    let ingrdObj = {} as IBurgerIngredients
+    
+    const query = location.search
+    const params = queryString.parse(query)
+    for (const ingrd in params) {
+      ingrdObj[ingrd] = params[ingrd]
+    }
+
+    this.setState(() => {
+      return {
+        ingredients: ingrdObj
+      }
+    })
+  }
+
   private cancelCheckout = () => {
     const { history } = this.props
     history.goBack()
