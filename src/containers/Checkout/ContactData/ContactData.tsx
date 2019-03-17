@@ -7,10 +7,18 @@ const StyledContactData = styled.div`
   margin: 20px auto;
   width: 80%;
   text-align: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
 
   @media (min-width: 600px) {
     width: 500px;
   }
+`
+
+const StyledContactInput = styled.input`
+  display: block;
 `
 
 class ContactData extends React.Component {
@@ -32,10 +40,10 @@ class ContactData extends React.Component {
       <StyledContactData>
         <h4>Enter Delivery details</h4>
         <form>
-          <input type="text" name="name" placeholder="Name" />
-          <input type="email" name="email" placeholder="Email" />
-          <input type="text" name="street" placeholder="Street address" />
-          <input type="text" name="postCode" placeholder="Post Code" />
+          <StyledContactInput type="text" name="name" placeholder="Name" />
+          <StyledContactInput type="email" name="email" placeholder="Email" />
+          <StyledContactInput type="text" name="street" placeholder="Street address" />
+          <StyledContactInput type="text" name="postCode" placeholder="Post Code" />
           <Button type="Sucess" onClick={() => {}}>Order</Button>
         </form>
       </StyledContactData>
