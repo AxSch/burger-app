@@ -35,17 +35,21 @@ interface IFunctionComponentProps {
 
 const Burger: React.FunctionComponent<IFunctionComponentProps> = ({ ingredients }) => {
   const renderIngrds = ingredients => {
-    const ingreds = Object.keys(ingredients).map(ingrd => {
-      return [...Array(ingredients[ingrd])].map((_, idx) => {
-        return <Ingredient type={ingrd} key={ingrd + idx} />
+    const ingrdArray = Object.keys(ingredients)
+    let ingrds = [] as any
+    if (ingrdArray.length > 0) {
+      ingrds = ingrdArray.map(ingrd => {
+        return [...Array(ingredients[ingrd])].map((_, idx) => {
+          return <Ingredient type={ingrd} key={ingrd + idx} />
+        })
+      }).reduce((prevVal, currVal) => {
+        return prevVal.concat(currVal)
       })
-    }).reduce((prevVal, currVal) => {
-      return prevVal.concat(currVal)
-    })
-    if (ingreds.length === 0) {
+    }
+    if (ingrds.length === 0) {
       return <p>Please add some ingredients</p>
     }
-    return ingreds
+    return ingrds
   }
   return (
     <StyledBurger>
