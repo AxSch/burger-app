@@ -2,6 +2,7 @@
 import React from 'react'
 import Button from '../../../components/UI/Button/Button'
 import styled from 'styled-components'
+import { IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder'
 
 const StyledContactData = styled.div`
   margin: 20px auto;
@@ -20,8 +21,11 @@ const StyledContactData = styled.div`
 const StyledContactInput = styled.input`
   display: block;
 `
+interface IContactDataProps {
+  ingredients: IBurgerIngredients
+}
 
-class ContactData extends React.Component {
+class ContactData extends React.Component<IContactDataProps> {
   constructor(props) {
     super(props)
   
