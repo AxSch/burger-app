@@ -200,7 +200,17 @@ class BurgerBuilder extends React.Component<{} & RouteComponentProps, IBurgerBui
     //       }
     //     })
     //   })
-    history.push("/checkout")
+    const queryParams = [] as String[]
+    for (const key in ingredients) {
+      queryParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(ingredients[key]))
+    }
+    
+    const queryString = queryParams.join('&')
+    
+    history.push({
+      pathname: "/checkout",
+      search: '?' + queryString
+    })
   }
 
   private renderIngredientsError = (error: boolean, ingredients) => {
