@@ -3,6 +3,9 @@ import React, { EventHandler } from 'react'
 import Button from '../../../components/UI/Button/Button'
 import styled from 'styled-components'
 import { IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder'
+import { RouteComponentProps } from 'react-router-dom'
+import * as moment from 'moment'
+import OrdersClient from '../../../http/OrdersClient'
 
 const StyledContactData = styled.div`
   margin: 20px auto;
@@ -23,6 +26,7 @@ const StyledContactInput = styled.input`
 `
 interface IContactDataProps {
   ingredients: IBurgerIngredients
+  totalPrice: number
 }
 
 interface IContactAddr {
@@ -34,7 +38,7 @@ interface IContactDataState {
   name: string,
   email: string,
   address: IContactAddr
-  loading: boolean
+  isLoading: boolean
 }
 
 class ContactData extends React.Component<IContactDataProps, IContactDataState> {
@@ -48,12 +52,43 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
         street: '',
         postalCode: '',
       },
-      loading: false
+      isLoading: false
     }
   }
 
   private orderHandler = (e) => {
+    const { ingredients, totalPrice } = this.props
+    const { name, address, email } = this.state
     e.preventDefault()
+    const order = {
+      ingredients: ingredients,
+      cost: totalPrice,
+      customer: {
+        name: name,
+        address: {
+          street: address.street,
+          postCode: address.postalCode,
+        },
+        email: email,
+      },
+      timestamp: moment().format("DD-MM-YYYY"),
+      deliveryMethod: 'driver'
+    }
+    OrdersClient.post('/orders.json', order) // using a Firebase endpoint
+      .then(res => {
+        this.setState((prevState) => {
+          return {
+            isLoading: !prevState.isLoading,
+          }
+        })
+      })
+      .catch(error => {
+        this.setState(() => {
+          return {
+            isLoading: false,
+          }
+        })
+      })
   }
 
   public render() {
