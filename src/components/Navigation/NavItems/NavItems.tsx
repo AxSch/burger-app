@@ -19,8 +19,8 @@ const StyledNavItems = styled.ul`
 const NavItems: React.FunctionComponent = () => {
   return (
     <StyledNavItems>
-      <NavItem isActive link="/">Home</NavItem>
-      <NavItem isActive={false} link="/checkout">Checkout</NavItem>
+      <NavItem link="/">Home</NavItem>
+      <NavItem link="/orders">Orders</NavItem>
     </StyledNavItems>
   )
 }
