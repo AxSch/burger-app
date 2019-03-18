@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from "react-router-dom";
 import  styled from 'styled-components'
 
 const StyledNavItem = styled.li`
@@ -16,7 +17,7 @@ const StyledNavItem = styled.li`
   }
 `
 
-const StyledItemLink = styled.a`
+const StyledItemLink = styled(NavLink)`
   color: #8F5C2C;
   text-decoration: none;
   width: 100%;
@@ -48,14 +49,13 @@ const StyledItemLink = styled.a`
 interface INavItem {
   link: string
   children: string
-  isActive: boolean
 }
 
-const NavItem: React.FunctionComponent<INavItem> = ({ link, children, isActive }) => {
+const NavItem: React.FunctionComponent<INavItem> = ({ link, children }) => {
   return (
     <>
       <StyledNavItem>
-        <StyledItemLink className={isActive ? "active" : null} href={link}>{children}</StyledItemLink>
+        <StyledItemLink to={link}>{children}</StyledItemLink>
       </StyledNavItem>
     </> 
   )
