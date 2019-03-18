@@ -10,20 +10,13 @@ const StyledOrders = styled.div`
   box-sizing: border-box;
 `
 
-interface IOrdersState {
-  orders: []
-  isLoading: boolean
-}
-
-class Order extends React.Component<{}, IOrdersState> {
-  public render() {
-    return (
-      <StyledOrders>
-        <p>Ingredients:</p>
-        <p>Price: <strong>£costs</strong></p>
-      </StyledOrders>
-    )
-  }
+const Order: React.FunctionComponent = () => {
+  return (
+    <StyledOrders>
+      <p>Ingredients:</p>
+      <p>Price: <strong>£costs</strong></p>
+    </StyledOrders>
+  )
 }
 
 export default Order
