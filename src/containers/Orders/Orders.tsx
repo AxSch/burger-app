@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Order from "../../components/Order/Order"
 
 const StyledOrders = styled.div`
   width: 100%;
@@ -13,10 +14,9 @@ const StyledOrders = styled.div`
 class Orders extends React.Component {
   public render() {
     return (
-      <StyledOrders>
-        <p>Ingredients:</p>
-        <p>Price: <strong>£costs</strong></p>
-      </StyledOrders>
+      <>
+        <Order />
+      </>
     )
   }
 }
