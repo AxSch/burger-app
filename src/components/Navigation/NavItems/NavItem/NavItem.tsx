@@ -55,7 +55,7 @@ const NavItem: React.FunctionComponent<INavItem> = ({ link, children }) => {
   return (
     <>
       <StyledNavItem>
-        <StyledItemLink to={link}>{children}</StyledItemLink>
+        <StyledItemLink exact to={link}>{children}</StyledItemLink>
       </StyledNavItem>
     </> 
   )
