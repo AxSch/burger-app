@@ -168,43 +168,12 @@ class BurgerBuilder extends React.Component<{} & RouteComponentProps, IBurgerBui
       }
     })
     const { ingredients, totalPrice } = this.state
-    const order = {
-      ingredients: ingredients,
-      cost: totalPrice,
-      customer: {
-        name: 'Joe',
-        address: {
-          street: 'Test',
-          postCode: 'TE57 2OO',
-          town: 'TestyTrap'
-        },
-        email: 'test@test.com',
-      },
-      timestamp: moment().format("DD-MM-YYYY"),
-      deliveryMethod: 'driver'
-    }
-    // OrdersClient.post('/orders.json', order) // using a Firebase endpoint
-    //   .then(res => {
-    //     this.setState((prevState) => {
-    //       return {
-    //         isLoading: !prevState.isLoading,
-    //         isVisible: !prevState.isVisible
-    //       }
-    //     })
-    //   })
-    //   .catch(error => {
-    //     this.setState(() => {
-    //       return {
-    //         isLoading: false,
-    //         isVisible: false
-    //       }
-    //     })
-    //   })
     const queryParams = [] as String[]
     for (const key in ingredients) {
       queryParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(ingredients[key]))
     }
     
+    queryParams.push('price=' + this.state.totalPrice)
     const queryString = queryParams.join('&')
     
     history.push({
