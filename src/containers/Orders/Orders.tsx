@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Order from "../../components/Order/Order"
+import OrdersClient from '../../http/OrdersClient'
+import withError from '../../components/hoc/withError'
 
 const StyledOrders = styled.div`
   width: 100%;
@@ -10,8 +12,48 @@ const StyledOrders = styled.div`
   margin: 10px auto;
   box-sizing: border-box;
 `
+interface IOrdersState {
+  orders: []
+  isLoading: boolean
+}
+class Orders extends React.Component<{}, IOrdersState> {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       orders: [],
+       isLoading: false
+    }
+  }
+  
+  public componentDidMount() {
+    OrdersClient.get('/orders.json')
+      .then(res => {
+        const orders = [] as any
+        for (const key in res.data) {
+          if (res.data.hasOwnProperty(key)) {
+            orders.push({
+              ...res.data[key],
+              id: key
+            })
+          }
+        }
+        this.setState((prevState) => {
+          return {
+            isLoading: !prevState.isLoading,
+            orders: orders
+          }
+        })
+      })
+      .catch(error => {
+        this.setState(() => {
+          return {
+            isLoading: false
+          }
+        })
+      })
+  }
 
-class Orders extends React.Component {
   public render() {
     return (
       <>
@@ -21,4 +63,4 @@ class Orders extends React.Component {
   }
 }
 
-export default Orders
+export default withError(Orders, OrdersClient)
