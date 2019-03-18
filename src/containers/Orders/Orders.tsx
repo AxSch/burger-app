@@ -13,7 +13,7 @@ const StyledOrders = styled.div`
   box-sizing: border-box;
 `
 interface IOrdersState {
-  orders: []
+  orders: any[]
   isLoading: boolean
 }
 class Orders extends React.Component<{}, IOrdersState> {
@@ -55,9 +55,12 @@ class Orders extends React.Component<{}, IOrdersState> {
   }
 
   public render() {
+    const { orders } = this.state
     return (
       <>
-        <Order />
+        {orders.map(order => {
+          return <Order key={order.id} />
+        })}
       </>
     )
   }
