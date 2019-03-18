@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import OrdersClient from '../../http/OrdersClient'
 
 const StyledOrders = styled.div`
   width: 80%;
@@ -10,7 +11,28 @@ const StyledOrders = styled.div`
   box-sizing: border-box;
 `
 
-class Order extends React.Component {
+interface IOrdersState {
+  orders: []
+  isLoading: boolean
+}
+
+class Order extends React.Component<{}, IOrdersState> {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       orders: [],
+       isLoading: false
+    }
+  }
+  
+  public componentDidMount() {
+    OrdersClient.get('/orders.json')
+      .then(res => {
+
+      })
+  }
+
   public render() {
     return (
       <StyledOrders>
