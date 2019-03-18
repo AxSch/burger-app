@@ -8,6 +8,7 @@ import ContactData from '../../containers/Checkout/ContactData/ContactData';
 
 interface ICheckoutState {
   ingredients: IBurgerIngredients
+  totalPrice: number
 }
 
 class Checkout extends React.Component<{} & RouteComponentProps, ICheckoutState> {
@@ -20,22 +21,29 @@ class Checkout extends React.Component<{} & RouteComponentProps, ICheckoutState>
         meat: 0,
         bacon: 0,
       },
+      totalPrice: 0
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { location } = this.props
     let ingrdObj = {} as IBurgerIngredients
+    let totalPrice = 0
 
     const query = location.search
     const params = queryString.parse(query)
     for (const ingrd in params) {
-      ingrdObj[ingrd] = params[ingrd]
+      if(ingrd === 'price') {
+        totalPrice = Number(params[ingrd])
+      } else {
+        ingrdObj[ingrd] = params[ingrd]
+      }
     }
 
     this.setState(() => {
       return {
-        ingredients: ingrdObj
+        ingredients: ingrdObj,
+        totalPrice: totalPrice
       }
     })
   }
@@ -51,9 +59,9 @@ class Checkout extends React.Component<{} & RouteComponentProps, ICheckoutState>
   }
 
   public render() {
-    const { ingredients } = this.state
+    const { ingredients, totalPrice } = this.state
     const { match } = this.props
-    
+    // console.log(ingredients)
     return (
       <div>
         <CheckoutSummary
@@ -61,7 +69,7 @@ class Checkout extends React.Component<{} & RouteComponentProps, ICheckoutState>
           continueCheckout={this.continueCheckout}
           cancelCheckout={this.cancelCheckout}
         />
-        <Route path={match.url + '/contact-data'} render={() => <ContactData ingredients={ingredients}/>} />
+        <Route path={match.url + '/contact-data'} render={() => (<ContactData totalPrice={totalPrice} ingredients={ingredients} />)} />
       </div>
       )
     }
