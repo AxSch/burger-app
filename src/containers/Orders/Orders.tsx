@@ -59,7 +59,13 @@ class Orders extends React.Component<{}, IOrdersState> {
     return (
       <>
         {orders.map(order => {
-          return <Order key={order.id} />
+          return (
+            <Order 
+              ingredients={order.ingredients}
+              key={order.id}
+              totalPrice={Number(order.cost)} 
+            />
+          )
         })}
       </>
     )
