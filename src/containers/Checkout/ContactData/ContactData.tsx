@@ -41,7 +41,7 @@ interface IContactDataState {
   isLoading: boolean
 }
 
-class ContactData extends React.Component<IContactDataProps, IContactDataState> {
+class ContactData extends React.Component<IContactDataProps & RouteComponentProps, IContactDataState> {
   constructor(props) {
     super(props)
 
@@ -57,7 +57,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
   }
 
   private orderHandler = (e) => {
-    const { ingredients, totalPrice } = this.props
+    const { ingredients, totalPrice, history } = this.props
     const { name, address, email } = this.state
     e.preventDefault()
     const order = {
@@ -81,6 +81,7 @@ class ContactData extends React.Component<IContactDataProps, IContactDataState> 
             isLoading: !prevState.isLoading,
           }
         })
+        history.push('/')
       })
       .catch(error => {
         this.setState(() => {
