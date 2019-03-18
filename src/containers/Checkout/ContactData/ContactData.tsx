@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { EventHandler } from 'react'
 import Button from '../../../components/UI/Button/Button'
 import styled from 'styled-components'
 import { IBurgerIngredients } from '../../../containers/BurgerBuilder/BurgerBuilder'
@@ -25,20 +25,37 @@ interface IContactDataProps {
   ingredients: IBurgerIngredients
 }
 
-class ContactData extends React.Component<IContactDataProps> {
+interface IContactAddr {
+  street: string
+  postalCode: string
+}
+
+interface IContactDataState {
+  name: string,
+  email: string,
+  address: IContactAddr
+  loading: boolean
+}
+
+class ContactData extends React.Component<IContactDataProps, IContactDataState> {
   constructor(props) {
     super(props)
-  
+
     this.state = {
-       name: '',
-       email: '',
-       address: {
-         street:'',
-         postalCode:'',
-        },
+      name: '',
+      email: '',
+      address: {
+        street: '',
+        postalCode: '',
+      },
+      loading: false
     }
   }
-  
+
+  private orderHandler = (e) => {
+    e.preventDefault()
+  }
+
   public render() {
     return (
       <StyledContactData>
@@ -48,7 +65,7 @@ class ContactData extends React.Component<IContactDataProps> {
           <StyledContactInput type="email" name="email" placeholder="Email" />
           <StyledContactInput type="text" name="street" placeholder="Street address" />
           <StyledContactInput type="text" name="postCode" placeholder="Post Code" />
-          <Button type="Sucess" onClick={() => {}}>Order</Button>
+          <Button type="Sucess" onClick={this.orderHandler}>Order</Button>
         </form>
       </StyledContactData>
     )
